@@ -1,0 +1,174 @@
+\documentclass[journal=jpcafh,manuscript=article]{achemso}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{natbib}
+
+\SectionNumbersOn
+
+\author{Franz Martinez}
+\email{franzmichel.martinez@ucalgary.ca}
+\affiliation{Schulich School of Engineering, University of Calgary, Calgary, Alberta, Canada}
+\title{Outline--Draft JCP format for: Reactive Force Field for Perovskite--Based Solid Oxides and Its Application to Solid Oxide Electrolysis Cells}
+
+\begin{document}
+
+\begin{abstract}
+Conversion of CO2 to syngas can be achieved in solid oxide electrolysis cells at high temperatures (~1000 K) by using Perovskite-based solid oxides as electrocatalysts. This process is projected to be a viable way of generating fuels by converting, and therefore reducing, CO2 from industrial emissions. However, full understanding of the mechanism involved in CO2 conversion on these electrocatalysts is far from complete. In this work, we perform DFT calculations and reactive molecular dynamics to understand the electronic structure and stability of perovskite-based solid oxides used as electrocatalysts for CO2 conversion. To this end, our study involves firstly, generation of a dataset from DFT calculations, which include optimized geometries, equations of state, surface energies, and slab—CO2 interactions from a set of ABO3-type perovskites. Secondly, we parametrize the reactive force field, ReaxFF, using an annealing Monte Carlo optimizer and a covariance matrix adaptation evolution strategy. Finally, we explore bulk dynamics of the perovskites at high temperature and the time evolution of reactions involving CO2 on the surface of slabs from the perovskites. Of interest, our results demonstrate the modes in which the CO2 is chemisorbed at high temperature; the consequent formation of intermediates; and their role in further conversion of the CO2. This study serves as a base to elucidate the elementary steps involved in the mechanism of CO2 conversion on perovskites at high temperature, which will allow us to understand the most favorable conditions for the reaction to occur and, consequently, provide us of a way to improve the design of perovskite-based solid oxide electrocatalysts.
+\end{abstract}
+
+
+\section{Introduction}
+
+CO$_2$, electrocatalysts, and solid oxide fuels.\cite{
+habisreutinger_photocatalytic_2013,
+e.benson_electrocatalytic_2009,
+pradeepindrakanti_photoinduced_2009,
+indrakanti_quantum_2009,
+zeng_review_2018,
+yamada_systematic_2018,
+kar_enhanced_2016,
+grimaud_double_2013,
+ni_electrochemical_2012,
+tan_co_2011,
+baniecki_photoemission_2008,
+jia_heterogeneous_2017,
+yin_oxide_2018,
+zheng_review_2017,
+andersson_review_2010,
+beatriz_microwave-assisted_2015}
+
+DFT studies.\cite{tian_dft_2018,
+mayeshiba_strain_2017,
+wang_oxidation_2006,
+li_density_2013,
+liu_influence_2018,
+seo_design_2015,
+evarestov_adsorption_2007,
+pilania_establishing_2012,
+pilania_adsorption_2010,
+zurek_predicting_2015}
+
+Molecular dynamics studies.\cite{wang_coarse-grained_2014}
+
+\section{Computational Methods}
+
+\subsection{ReaxFF and Parameterization Strategy}
+
+ReaxFF is a force field based on the dynamical computation of the bond-order, which dictates the connectivity between atoms on the fly.
+This approach allows ReaxFF to consider bond breaking and formation, and therefore the ability to follow the apparition of intermediates involved in the reaction mechanism in complex systems containing thousands of atoms.\cite{migliorati_development_2017,merinov_reaxff_2014,
+raymand_reactive_2008,
+shin_development_2015,
+van_duin_reaxff_2008,
+goddard_development_2006,
+hubin_parameterization_2016,
+senftle_reaxff_2016,
+chenoweth_reaxff_2009,
+chenoweth_reaxff_2008,
+van_duin_reaxff_2008-1,
+liu_reaxff-lg:_2011}
+
+Its use bridges the advantages of classical molecular dynamics simulation with those of quantum--mechanical approaches.
+
+Parametrization of ReaxFF involves generation of a dataset, generally from quantum mechanical calculations, and subsequent fitting of the force field parameters with respect to the dataset by minimizing the error function, $E_f$,
+\begin{equation}
+E_f = \frac{(x_{i} - x_{ReaxFF,i})^2}{w_i}.
+\end{equation}
+Where $x_{i}$ is the value of a property $x$ (e.g. heat of formation, geometries, energetic differences, etc.); $x_{ReaxFF,i}$ is such property calculated using ReaxFF; and $w_i$ is the weight, or accuracy, associated to the desired deviation between both $x_i$ and $x_{ReaxFF,i}$
+In this work the Monte Carlo Force Field Optimizer,\cite{iype_parameterization_2013} part of the ADF package, has been used to fit the various parameters of the force field, mostly because the method has been shown to give good results independent of the initial guess for the force fields parameters.
+
+The parametrization of the force field was performed using various stages, and it started with known parameters for C, H, O, S, Fe, and Cr from a previous study of hydrocarbon oxidation on pyrite--covered Cr$_2$O$_3$; \cite{shin_development_2015} and for Ca from a previous study of calcium oxyde hydration. \cite{manzano_hydration_2012}
+
+With starting parameters for most elements except for La, the first stage of the parametrization involved fitting the La--La parameters of the force field to the following: quantum mechanically calculated equations of state corresponding to three solid phases of La, i.e. double hexagonal close packed (dhcp, $\alpha$-La), face centered cubic (fcc, $\gamma$-La), and body centered cubic (bcc, $\beta$-La); and data from the electronic structure calculation of the La$_2$ molecule was added.
+This stage was carried out while keeping parameters for other interactions unchanged.
+The following stage involved further fitting of the La--La parameters, namely those related to the electrostatic interaction (EEM shielding, EEM electronegativity, and EMM hardness), and the La--O parameters by adding to the dataset Mulliken charges and geometrical information obtained from the optimized structures of the La$_2$O$_3$ cluster, three La$_4$O$_6$ clusters, and one La$_6$O$_9$ cluster.
+Also, the equations of state corresponding to two solid structures of La$_2$O$_3$ were computed and added.
+
+
+\subsection{Electronic Structure Calculations for Dataset Generation}
+
+DFT calculations are carried out using Quantum Espresso,\cite{giannozzi_advanced_2017} for all solid oxides in bulk or slab form.
+Calculations were performed using the pseudo--potentials from the PSlibrary with scalar-relativistic effects due to the presence of Lanthanum \textbf{put references}.
+A value of 75.0 Ry was used for the kinetic energy cutoff, which were tested for convergence ensuring that $\Delta E_{tot} / \Delta E_{cut} <$ 0.01 eV per atom.
+Monkhorst-Pack k-point sampling of the Brillouin zone was chosen to be $4\times4\times4$ for most calculations using cells of approximately 5.5 \AA $\times$ 7.6 \AA $\times$ 5.5 \AA, due to the variable size of the cells after variable cell relaxation.
+The k-point grid used was also tested using the same criterion to ensure convergence.
+
+Because the transition metals present localized electronic density on their d--orbitals with strong correlation, the Hubbard correction is employed to take into account these effects.\textbf{put references}
+Values used for the Hubbard term, U, were taken from \textbf{put values, and justify about not determining their values from linear response theory}
+
+The convergence criterion used for all calculations was of 0.02 eV for the total energy, and in the case of relaxations the maximum force component on each atom had to satisfy being smaller than 0.01 eV/\AA 
+
+Some energetic and geometric parameters were also obtained from clusters and molecules in the gas phase using the ADF package.
+Here, for consistency with other parameters obtained previously for ReaxFF, the B3LYP functional has been used with TZP STO--basis functions.
+Scalar relativistic effects were introduced using the ZORA correction.
+
+\subsection{Molecular Dynamics Trajectories Using ReaxFF}
+
+For the molecular dynamics simulations using ReaxFF, the system \textbf{specify details for bulk simulations and slabs} ... first is equilibrated using classical molecular dynamics with the UFF force field.
+From the equilibrated trajectory at the conditions required \textbf{double check temperature and pressure and change this part}, several points are selected randomly as starting points for the simulation.
+This ensures that the system starts from a correct point in equilibrium of the ensemble for the ReaxFF dynamics.
+
+\section{Results and Discussion}
+
+\subsection{Equations of State}
+
+Equations of state for hexagonal La, LaFeO$_3$, LaCrO$_3$, ... were calculated using DFT, and the ReaxFF force field was parametrized to reproduce this curve to the best possible fit.
+Because the relationship between energy and volume in solids allow to capture the stability of the phase, fitting of these curves give ReaxFF the ability to model accurately the bulk phase of the perovskite.
+
+The bulk modulus for $\alpha$-La was obtained by fitting the calculated points to the Birch-Murnaghan equation of state\cite{fu_first-principles_1983}, and the value obtained of 25.6\,GPa agrees with an approximate 8\% of error compared to the reported experimental bulk modulus value of 27.9\,GPa.\cite{lide2003crc}
+
+\subsection{Surface Energies}
+
+Given the differences, in structure and energetics, of the surface compared to the bulk, it is necessary to introduce this behaviour to the force field.
+To this end, slabs of various perovskites were constructed from their bulk counterparts to extend the ReaxFF force field.
+\textbf{Calculations currently going on}
+
+\subsection{Oxygen Vacancy Formation Energies}
+
+Introduction of Ca and Sr in the A--site of the perovskites favours the formation of oxygen vacancies due to the change in ionic size compared to La and the different charges of these cations. \textbf{cite}
+Also, this changes allows for oxygen ionic diffusion through the solid.
+The existence of oxygen vacancies in the system needs to be captured by ReaxFF in the form of correctly capturing changes in the chemical environment and in the relative stability of the perovskite unit cell in the absence of one oxygen.
+For various perovskites, the oxygen vacancy formation energy is calculated and incorporated into the dataset used to fit ReaxFF.
+
+\section{Applications and Discussion}
+
+\subsection{Oxygen Diffusion through the Perovskites}
+
+To exemplify the dynamics on the bulk, diffusion of O$_2^{-2}$ is followed through the perovskite in bulk phase.
+
+Also, to account for the accuracy of the force field, the expansion coefficient is computed for LCFCr and LSFCr.
+This value is compared to experimental results ...
+
+\subsection{CO$_2$ Interactions on the Surface}
+
+Using a slab of a representative portion \textbf{fill in details of the real size} of the surface of the LCFCr, various mixtures of gases are fed into one of the surfaces ...
+
+Formation of intermediates is observed at 1073 K \textbf{double check temperature}
+
+\section{Concluding Remarks}
+
+
+\begin{acknowledgement}
+This work has been enabled by the use of computing resources provided by Compute Canada.
+\end{acknowledgement}
+
+\pagebreak
+
+\bibliography{co2perov2}
+
+\pagebreak
+\begin{tocentry}
+\begin{center}
+%\includegraphics{toc.eps}
+insert ToC if requested
+\end{center}
+\end{tocentry}
+
+
+\end{document}
