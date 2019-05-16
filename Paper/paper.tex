@@ -93,20 +93,21 @@ Also, the equations of state corresponding to two solid structures of La$_2$O$_3
 
 \subsection{Electronic Structure Calculations for Dataset Generation}
 
-DFT calculations are carried out using Quantum Espresso,\cite{giannozzi_advanced_2017} for all solid oxides in bulk or slab form.
-Calculations were performed using the pseudo--potentials from the PSlibrary with scalar-relativistic effects due to the presence of Lanthanum \textbf{put references}.
-A value of 75.0 Ry was used for the kinetic energy cutoff, which were tested for convergence ensuring that $\Delta E_{tot} / \Delta E_{cut} <$ 0.01 eV per atom.
-Monkhorst-Pack k-point sampling of the Brillouin zone was chosen to be $4\times4\times4$ for most calculations using cells of approximately 5.5 \AA $\times$ 7.6 \AA $\times$ 5.5 \AA, due to the variable size of the cells after variable cell relaxation.
-The k-point grid used was also tested using the same criterion to ensure convergence.
+DFT calculations are carried out using Quantum Espresso,\cite{giannozzi_advanced_2017} for all solid structures in bulk or slab form.
+These calculations were performed using the pseudo--potentials from the PSlibrary including scalar-relativistic effects due to the presence of Lanthanum \textbf{put references}.
+A value of 75.0 Ry was used for the kinetic energy cutoff, which was tested for convergence ensuring that $\Delta E_{tot} / \Delta E_{cut} <$ 0.01 eV was obtained per atom.
+Monkhorst-Pack k-point sampling of the Brillouin zone was chosen to be $4\times4\times4$ for most calculations.
+The criterion used involved using a k-point grid of 4 on the edge of a cell between 5 and 8 \AA in length, then to preserve the grid on bigger or smaller cells, the grid was scaled accordingly.
+The k-point grids used were also tested using the same criterion from energy converge to ensure convergence with respect to grid size.
 
 Because the transition metals present localized electronic density on their d--orbitals with strong correlation, the Hubbard correction is employed to take into account these effects.\textbf{put references}
 Values used for the Hubbard term, U, were taken from \textbf{put values, and justify about not determining their values from linear response theory}
 
 The convergence criterion used for all calculations was of 0.02 eV for the total energy, and in the case of relaxations the maximum force component on each atom had to satisfy being smaller than 0.01 eV/\AA 
 
-Some energetic and geometric parameters were also obtained from clusters and molecules in the gas phase using the ADF package.
-Here, for consistency with other parameters obtained previously for ReaxFF, the B3LYP functional has been used with TZP STO--basis functions.
-Scalar relativistic effects were introduced using the ZORA correction.
+Differences in energies and optimized geometries were also obtained from clusters in the gas phase using \emph{Gaussian16} \textbf{put references}.
+For these calculations, the B3LYP functional has been used with the aug--cc--pVTZ basis functions for oxygen and for lanthanum the La basis set from the Stuttgart/Dresden group, La(RSC97) \textbf{double check} with a 28--electron ECP \textbf{citation}.
+By using this approach, we ensure that the parameters obtained for lanthanum in these calculations are consistent with the way the oxygen parameters were obtained in previous studies.
 
 \subsection{Molecular Dynamics Trajectories Using ReaxFF}
 
