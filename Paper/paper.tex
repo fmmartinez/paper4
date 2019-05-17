@@ -27,13 +27,29 @@ Conversion of CO2 to syngas can be achieved in solid oxide electrolysis cells at
 \section{Introduction}
 
 % introduce lanthanum uses
-Lanthanum is an element involved either as a catalyst or as a ion in supporting structures of other active catalytic materials.
-Particularly, catalysts based on a form of Lanthanum oxide have shown a good efficiency in the oxidative coupling of methane to form ethane and/or ethylene \textbf{import citation}, or as main components of electro--catalysts used in CO$_2$ conversion to CO \textbf{import citation}.
+Lanthanum is a transition metal involved in various applications that range from use in catalysts, batteries, and in medicine \cite{atwood2013rare,he2013preparation}.
+Particularly, catalysts based on Lanthanum oxide have shown a good efficiency in the oxidative coupling of methane to form ethane and/or ethylene \textbf{import citation}, or as main components of electro--catalysts used in CO$_2$ conversion to CO \textbf{import citation}.
 
 % what is the problem with lanthanum
+\emph{need to introduce more about uses of La}
 
-Given the importance of this element in its applications, quantum mechanical calculations have been carried out to understand its role and influence, if any, on the systems where it is found.
+Quantum mechanical calculations have been carried out to understand the role and influence, if any, of Lanthanum on its many applications.
 However, many of the phenomena that takes place in catalysis involve the interaction of many atoms for which rigorous quantum mechanical calculations are unfeasible.
+For this reason, force fields are commonly used to study applications via molecular dynamics calculations.
+In particular, the behaviour of La$^3+$ in aqueous solution has been studied by various groups using different parametrization strategies to improve the accuracy of the description of the interaction between Lanthanum and water \cite{duvail2007pair}.
+These approaches have proven to successfully describe the La--O interaction in liquid water, but due to the size of Lanthanum the introduction of some form of explicit polarizability is necessary to properly describe the interactions between Lanthanum and other elements.
+
+One of the major drawbacks of the use of general polarizable force fields is the impossibility to describe chemical reactions, as these models disable explicit bond breaking and formation to produce transferable parameters and simple expressions for calculating energies and forces.
+But, with the increasing computational power processing, reactive force fields that can capture bond breaking and formation on--the--fly have been developed actively during the last decade.
+Particularly, ReaxFF is a reactive force field that has been extensively used to study successfully reactive events between solid, liquid, and gas phases.
+This transferability between phases, and the possibility to study phenomena where chemical events and dynamical factors are of importance makes ReaxFF a powerful tool that bridges the lower computational expense from force fields and the quantum mechanical description of a system.
+Although the current form of ReaxFF has been in development since 2008 \cite{chenoweth_reaxff_2008} and many elements have been parametrized to be used in ReaxFF not all interactions have been fully parametrized, and some elements still remain to be parametrized.
+An important point is that parameters used in ReaxFF are heavily dependent on the applications for which they have been explicitly parametrized, so while some parameters can be transferable testing is necessary to ensure that interactions are well described.
+
+The purpose of this study is to generate a set of parameters for Lanthanum as well as its interaction with other elements, namely Ca, Fe, Cr, and O, to be used for describing solid state materials used in catalysis.
+To this end, in the remainder of this paper, we introduce ReaxFF and a parametrization strategy in Sec.~\ref{sec:reaxff-strategy}; and the computational methods used, i.e. electronic structure calculations in Sec.~\ref{sec:dft-details}; and molecular dynamics simulations in Sec.~\ref{sec:md-details}.
+Then, we discuss in Sec.~\ref{sec:results-and-discussion} the quality of the newly generated parameters by analyzing the ability of the ReaxFF to reproduce the generated dataset from quantum mechanical calculations.
+Finally, we use the parameters obtained to model some possible applications discuss the results in Sec.~\ref{sec:applications}, and present our concluding remarks in Sec.~\ref{sec:conclusions}
 
 CO$_2$, electrocatalysts, and solid oxide fuels.\cite{
 habisreutinger_photocatalytic_2013,
@@ -69,6 +85,7 @@ Molecular dynamics studies.\cite{wang_coarse-grained_2014}
 \section{Computational Methods}
 
 \subsection{ReaxFF and Parameterization Strategy}
+\label{sec:reaxff-strategy}
 
 ReaxFF is a force field based on the dynamical computation of the bond-order, which dictates the connectivity between atoms on the fly.
 This approach allows ReaxFF to consider bond breaking and formation, and therefore the ability to follow the apparition of intermediates involved in the reaction mechanism in complex systems containing thousands of atoms.\cite{migliorati_development_2017,merinov_reaxff_2014,
@@ -101,6 +118,7 @@ Also, the equations of state corresponding to two solid structures of La$_2$O$_3
 
 
 \subsection{Electronic Structure Calculations for Dataset Generation}
+\label{sec:dft-details}
 
 DFT calculations are carried out using Quantum Espresso,\cite{giannozzi_advanced_2017} for all solid structures in bulk or slab form.
 These calculations were performed using the pseudo--potentials from the PSlibrary including scalar-relativistic effects due to the presence of Lanthanum \textbf{put references}.
@@ -119,12 +137,14 @@ For these calculations, the B3LYP functional has been used with the aug--cc--pVT
 By using this approach, we ensure that the parameters obtained for lanthanum in these calculations are consistent with the way the oxygen parameters were obtained in previous studies.
 
 \subsection{Molecular Dynamics Trajectories Using ReaxFF}
+\label{sec:md-details}
 
 For the molecular dynamics simulations using ReaxFF, the system \textbf{specify details for bulk simulations and slabs} ... first is equilibrated using classical molecular dynamics with the UFF force field.
 From the equilibrated trajectory at the conditions required \textbf{double check temperature and pressure and change this part}, several points are selected randomly as starting points for the simulation.
 This ensures that the system starts from a correct point in equilibrium of the ensemble for the ReaxFF dynamics.
 
-\section{Results and Discussion}
+\section{Parametrization Results and Discussion}
+\label{sec:results-and-discussion}
 
 \subsection{Equations of State}
 
@@ -146,7 +166,8 @@ Also, this changes allows for oxygen ionic diffusion through the solid.
 The existence of oxygen vacancies in the system needs to be captured by ReaxFF in the form of correctly capturing changes in the chemical environment and in the relative stability of the perovskite unit cell in the absence of one oxygen.
 For various perovskites, the oxygen vacancy formation energy is calculated and incorporated into the dataset used to fit ReaxFF.
 
-\section{Applications and Discussion}
+\section{Applications}
+\label{sec:applications}
 
 \subsection{Oxygen Diffusion through the Perovskites}
 
@@ -162,6 +183,7 @@ Using a slab of a representative portion \textbf{fill in details of the real siz
 Formation of intermediates is observed at 1073 K \textbf{double check temperature}
 
 \section{Concluding Remarks}
+\label{sec:conclusions}
 
 
 \begin{acknowledgement}
