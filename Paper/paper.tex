@@ -10,6 +10,8 @@
 \usepackage{epstopdf}
 \usepackage{natbib}
 
+\graphicspath{ {./images/} }
+
 \SectionNumbersOn
 
 \author{Franz Martinez}
@@ -158,6 +160,21 @@ This ensures that the system starts from a correct point in equilibrium of the e
 
 Equations of state for hexagonal La, LaFeO$_3$, LaCrO$_3$, ... were calculated using DFT, and the ReaxFF force field was parametrized to reproduce this curve to the best possible fit.
 Because the relationship between energy and volume in solids allow to capture the stability of the phase, fitting of these curves give ReaxFF the ability to model accurately the bulk phase of the perovskite.
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=1]{three-La-eos.pdf}
+\caption{Calculated equations of state corresponding to crystalline La in hexagonal (top), fcc (middle), and bcc (bottom) forms.}
+\label{fig:laeos}
+\end{figure}
+
+The equations of state for the three forms of Lanthanum are presented in Fig.~\ref{fig:laeos}.
+The plots show the parabolic behaviour of the equation of state, and that the parametrized ReaxFF can reproduce the results from DFT within an acceptable margin of error.
+As for the trends in stability of the three phases, ReaxFF is unable to properly reproduce it.
+The reported experimental trend places $\alpha$-La as the most stable, followed by $\gamma$-La, and then by$\beta$-La.
+In the case of ReaxFF the trend goes from most stable to less stable as $\gamma$-La, $\beta$-La, and $\alpha$-La.
+While the inability to reproduce stability is a known issue in ReaxFF, it is worth mentioning that in the case of La, the differences in energy between the phases is in the order of $\approx$~0.5~kcal/mol.
+It is then unsurprising that the parametrized force field is unable to exactly reproduce the trend,  given how small the difference in energy is compared to the target error in the fitting of the force field, which averages around 5~kcal/mol.
 
 The bulk modulus for $\alpha$-La was obtained by fitting the calculated points to the Birch-Murnaghan equation of state\cite{fu_first-principles_1983}, and the value obtained of 25.6\,GPa agrees with an approximate 8\% of error compared to the reported experimental bulk modulus value of 27.9\,GPa.\cite{lide2003crc}
 
