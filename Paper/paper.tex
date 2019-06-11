@@ -22,7 +22,7 @@
 \begin{document}
 
 \begin{abstract}
-\textbf{abstract needs to be updated}
+\textbf{abstract needs to be updated to reflect last changes}
 
 
 In this work, we perform the parametrization of a reactive force field, ReaxFF, for Lanthanum and its oxides.
@@ -121,7 +121,7 @@ In this work the Monte Carlo Force Field Optimizer,\cite{iype_parameterization_2
 
 The parametrization of the force field was performed using various stages, and it started with known parameters for C, H, O, S, Fe, and Cr from a previous study of hydrocarbon oxidation on pyrite--covered Cr$_2$O$_3$; \cite{shin_development_2015} and for Ca from a previous study of calcium oxyde hydration. \cite{manzano_hydration_2012}
 
-With starting parameters for most elements except for La, the first stage of the parametrization involved fitting the La--La parameters of the force field to the following: quantum mechanically calculated equations of state corresponding to three solid phases of La, i.e. double hexagonal close packed (dhcp, $\alpha$-La), face centered cubic (fcc, $\gamma$-La), and body centered cubic (bcc, $\beta$-La); and data from the electronic structure calculation of the La$_2$ molecule was added.
+With starting parameters for most elements except for Lanthanum, the first stage of the parametrization involved fitting the La--La parameters of the force field to the following: quantum mechanically calculated equations of state corresponding to three solid phases of La, i.e. double hexagonal close packed (dhcp, $\alpha$-La), face centered cubic (fcc, $\gamma$-La), and body centered cubic (bcc, $\beta$-La); and data from the electronic structure calculation of the La$_2$ molecule was added.
 This stage was carried out while keeping parameters for other interactions unchanged.
 The following stage involved further fitting of the La--La parameters, namely those related to the electrostatic interaction (EEM shielding, EEM electronegativity, and EMM hardness), and the La--O parameters by adding to the dataset Mulliken charges and geometrical information obtained from the optimized structures of the La$_2$O$_3$ cluster, three La$_4$O$_6$ clusters, and one La$_6$O$_9$ cluster.
 Also, the equations of state corresponding to two solid structures of La$_2$O$_3$ were computed and added.
@@ -160,13 +160,6 @@ This ensures that the system starts from a correct point in equilibrium of the e
 
 Equations of state for hexagonal La, LaFeO$_3$, LaCrO$_3$, ... were calculated using DFT, and the ReaxFF force field was parametrized to reproduce this curve to the best possible fit.
 Because the relationship between energy and volume in solids allow to capture the stability of the phase, fitting of these curves give ReaxFF the ability to model accurately the bulk phase of the perovskite.
-
-\begin{figure}[hbtp]
-\centering
-\includegraphics[scale=1]{three-La-eos.pdf}
-\caption{Calculated equations of state corresponding to crystalline La in hexagonal (top), fcc (middle), and bcc (bottom) forms.}
-\label{fig:laeos}
-\end{figure}
 
 The equations of state for the three forms of Lanthanum are presented in Fig.~\ref{fig:laeos}.
 The plots show the parabolic behaviour of the equation of state, and that the parametrized ReaxFF can reproduce the results from DFT within an acceptable margin of error.
@@ -216,8 +209,18 @@ Formation of intermediates is observed at 1073 K \textbf{double check temperatur
 
 
 \begin{acknowledgement}
-This work has been enabled by the use of computing resources provided by Compute Canada.
+This work was supported by the Canada First Research Excellence Fund (CFREF) Global Research Initiative (GRI) in Sustainable Low Carbon Unconventional Resources.
+Computational work has been enabled by the use of computing resources provided by Compute Canada.
 \end{acknowledgement}
+
+\pagebreak
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[width=\textwidth]{three-La-eos.pdf}
+\caption{Calculated equations of state corresponding to crystalline La in hexagonal (top), fcc (middle), and bcc (bottom) forms.}
+\label{fig:laeos}
+\end{figure}
 
 \pagebreak
 
