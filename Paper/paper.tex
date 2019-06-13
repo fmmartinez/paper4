@@ -98,7 +98,8 @@ Finally, we use the parameters obtained to model some possible applications disc
 \label{sec:reaxff-strategy}
 
 ReaxFF is a force field based on the dynamical computation of the bond-order, which dictates the connectivity between atoms on the fly.
-This approach allows ReaxFF to consider bond breaking and formation, and therefore the ability to follow the apparition of intermediates involved in the reaction mechanism in complex systems containing thousands of atoms.\cite{migliorati_development_2017,merinov_reaxff_2014,
+This approach allows ReaxFF to consider bond breaking and formation, and therefore permits to follow the apparition of intermediates.
+In complex systems this ability proves to be invaluable for following reaction mechanism when the number of atoms are in the order of thousands or higher.\cite{migliorati_development_2017,merinov_reaxff_2014,
 raymand_reactive_2008,
 shin_development_2015,
 van_duin_reaxff_2008,
@@ -109,8 +110,7 @@ chenoweth_reaxff_2009,
 chenoweth_reaxff_2008,
 van_duin_reaxff_2008-1,
 liu_reaxff-lg:_2011}
-
-Its use bridges the advantages of classical molecular dynamics simulation with those of quantum--mechanical approaches.
+This way, ReaxFF bridges classical molecular dynamics and quantum--mechanical approaches while avoiding exponential scaling of calculation times.
 
 Parametrization of ReaxFF involves generation of a dataset, generally from quantum mechanical calculations, and subsequent fitting of the force field parameters with respect to the dataset by minimizing the error function, $E_f$,
 \begin{equation}
