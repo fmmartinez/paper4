@@ -4,7 +4,7 @@ set origin 0,0
 
 set ylabel "Energy (kcal/mol)"
 set xlabel "Volume scaling, V/Vmin"
-set term pdf enhanced size 4,10 linewidth 2 
+set term pdf enhanced size 2,5 linewidth 2 font "Helvetica,10"
 set output "three-La-eos.pdf"
 
 set multiplot
