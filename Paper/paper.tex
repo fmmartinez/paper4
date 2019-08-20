@@ -37,7 +37,7 @@ These results highlight the utility of ReaxFF to study systems containing Lantha
 \section{Introduction}
 
 % introduce lanthanum uses
-Lanthanum is a transition metal involved in various applications that range from use in catalysts, batteries, and in medicine \cite{atwood2013rare,he2013preparation}.
+Lanthanum and Lanthanum oxide are materials involved in various applications involving catalysts, batteries, and medicine \cite{atwood2013rare,he2013preparation}.
 Particularly, catalysts based on Lanthanum oxide have shown a good efficiency in the oxidative coupling of methane to form ethane and/or ethylene \textbf{import citation}, or as main components of electro--catalysts used in CO$_2$ conversion to CO \textbf{import citation}.
 
 % what is the problem with lanthanum
@@ -56,8 +56,8 @@ This transferability between phases, and the possibility to study phenomena wher
 Although the current form of ReaxFF has been in development since 2008 \cite{chenoweth_reaxff_2008} and many elements have been parametrized to be used in ReaxFF not all interactions have been fully parametrized, and some elements still remain to be parametrized.
 An important point is that parameters used in ReaxFF are heavily dependent on the applications for which they have been explicitly parametrized, so while some parameters can be transferable testing is necessary to ensure that interactions are well described.
 
-The purpose of this study is to generate a set of parameters for Lanthanum as well as its interaction with other elements, namely Ca, Fe, Cr, and O, to be used for describing solid state materials used in catalysis.
-To this end, in the remainder of this paper, we introduce ReaxFF and a parametrization strategy in Sec.~\ref{sec:reaxff-strategy}; and the computational methods used, i.e. electronic structure calculations in Sec.~\ref{sec:dft-details}; and molecular dynamics simulations in Sec.~\ref{sec:md-details}.
+The purpose of this study is to generate a set of parameters for Lanthanum and Lanthanum Oxide that can be used for describing solid state materials used in catalysis and as a base for further development in applications that involve interactions with CO$_2$ or H$_2$O to name a couple.
+To this end, in the remainder of this paper, we introduce ReaxFF and a parametrization strategy in Sec.~\ref{sec:reaxff-strategy}; the computational methods used, i.e. electronic structure calculations in Sec.~\ref{sec:dft-details}; and molecular dynamics simulations in Sec.~\ref{sec:md-details}.
 Then, we discuss in Sec.~\ref{sec:results-and-discussion} the quality of the newly generated parameters by analyzing the ability of the ReaxFF to reproduce the generated dataset from quantum mechanical calculations.
 Finally, we use the parameters obtained to model some possible applications discuss the results in Sec.~\ref{sec:applications}, and present our concluding remarks in Sec.~\ref{sec:conclusions}
 
@@ -158,51 +158,61 @@ This ensures that the system starts from a correct point in equilibrium of the e
 
 \subsection{Equations of State}
 
-Equations of state for hexagonal La, LaFeO$_3$, LaCrO$_3$, ... were calculated using DFT, and the ReaxFF force field was parametrized to reproduce this curve to the best possible fit.
-Because the relationship between energy and volume in solids allow to capture the stability of the phase, fitting of these curves give ReaxFF the ability to model accurately the bulk phase of the perovskite.
+Equations of state for hexagonal La, ... La$_2$O$_3$, ... \emph{fill in other crystals} were calculated using DFT, and ReaxFF was parametrized to reproduce these curves to the best possible fit, i.e. using weights of 0.1 to 1.0.
+Because the relationship between energy and volume in solids allows to capture the stability of the phase, fitting of these curves give ReaxFF the ability to model accurately the bulk phase of the crystal structures for which it has been explicitly trained.
+
+\emph{all these results may actually change as the force field gets improved}
 
 The equations of state for the three forms of Lanthanum are presented in Fig.~\ref{fig:laeos}.
-The plots show the parabolic behaviour of the equation of state, and that the parametrized ReaxFF can reproduce the results from DFT within an acceptable margin of error.
+The plots show the parabolic behaviour of the equation of state, and that the parametrized ReaxFF can reproduce the results from DFT within an acceptable margin of error for high densities of the crystals, but shows a degradation on low densities.
 As for the trends in stability of the three phases, ReaxFF is unable to properly reproduce it.
-The reported experimental trend places $\alpha$-La as the most stable, followed by $\gamma$-La, and then by$\beta$-La.
-In the case of ReaxFF the trend goes from most stable to less stable as $\gamma$-La, $\beta$-La, and $\alpha$-La.
+The reported experimental trend places $\alpha$-La as the most stable phase, followed by $\gamma$-La, and then by$\beta$-La.
+In the case of ReaxFF, the predicted most stable phase corresponds to that of the$\gamma$-La, followed by $\beta$-La, and placing $\alpha$-La as the least stable phase.
 While the inability to reproduce stability is a known issue in ReaxFF, it is worth mentioning that in the case of La, the differences in energy between the phases is in the order of $\approx$~0.5~kcal/mol.
 It is then unsurprising that the parametrized force field is unable to exactly reproduce the trend,  given how small the difference in energy is compared to the target error in the fitting of the force field, which averages around 5~kcal/mol.
 
-The bulk modulus for $\alpha$-La was obtained by fitting the calculated points to the Birch-Murnaghan equation of state\cite{fu_first-principles_1983}, and the value obtained of 25.6\,GPa agrees with an approximate 8\% of error compared to the reported experimental bulk modulus value of 27.9\,GPa.\cite{lide2003crc}
+The bulk modulus for $\alpha$-La was obtained by fitting the calculated points close to the minimums to the Birch-Murnaghan equation of state\cite{fu_first-principles_1983}, and the value obtained of 25.6\,GPa agrees with an approximate 8\% of error compared to the reported experimental bulk modulus value of 27.9\,GPa for $\alpha$-La.\cite{lide2003crc}
+
+\subsection{Energies of Formation}
+
+For the Lanthanum oxides, and in general for any other metal or alloy compounds, the energy of formation is another important quantity that characterize the stability of their phases.
+The two phases parametrized in this work ... \emph{need to wait for results from update force field}
 
 \subsection{Surface Energies}
 
-Given the differences, in structure and energetics, of the surface compared to the bulk, it is necessary to introduce this behaviour to the force field.
-To this end, slabs of various perovskites were constructed from their bulk counterparts to extend the ReaxFF force field.
-\textbf{Calculations currently going on}
+Given the differences, in structure and energetics, of the surface compared to the bulk, we introduce this quantity to the training of the force field to enable the description of segregation and interaction of the oxides with vacuum/air.
+To this end, slabs of the oxides were constructed from their bulk counterparts and the energy used for parametrization, $\Delta_f E_s$, was obtained using the following expression:
+\begin{equation}
+    \Delta_f E_s = \frac{1}{N_s}(E_{slab} - nE_{bulk}),
+\end{equation}
+where $N_s$ is the total number of surface atoms, $n$ the total number of repeated unit cells of the system, $E_{slab}$ the total energy of the slab system, and $E_{bulk}$ the total energy of the bulk unit cell.
 
 \subsection{Oxygen Vacancy Formation Energies}
 
-Introduction of Ca in the A--site of the perovskites favours the formation of oxygen vacancies due to the change in ionic size compared to La and the different charges of these cations. \textbf{cite}
-Also, the formation of oxygen vacancies allow for ionic diffusion through the solid, which is an important process present when these solids are used as electrodes in solid oxide fuel or electrolysis cells.
-The existence of oxygen vacancies in the system needs to be captured by ReaxFF in the form of correctly capturing changes in the chemical environment and in the relative stability of the solid unit cell in the absence of one oxygen.
-For various perovskites, the oxygen vacancy formation energy is calculated and incorporated into the dataset used to fit ReaxFF.
+Presence of oxygen vacancies in the Lanthanum oxides allow for ionic diffusion of oxygen to occur through the solid.
+This process permits rearrangement of the crystalline structure of the solid and may be involved during the crystalline phase transition process of La$_2$O$_3$ \emph{confirm and add citation}.
+The existence of oxygen vacancies in the system is captured by ReaxFF by adding to the training set a systematic description of energetic variations due to the chemical environment of La, by adding the relative stability of the bulk and surface unit cell in the absence of different concentrations of oxygen.
+The first part was carried out by adding the relative energy differences between the series of (La$_2$O$_3$)$_n$ clusters, with $n$ going from 1 to 9.
+The second part involved calculation of oxygen vacancy formation energies for La$_2$O$_3$
+
+\emph{need to add results}
+
 
 \section{Applications}
 \label{sec:applications}
 
-\subsection{Nanoparticle formation of La$_2$O$_3$}
+\subsection{Phase transitions of La}
 
+As mentioned before, depending on the temperature, La can be found in three different crystal structures.
+We use the parameters obtained from our parametrization to show if ReaxFF is capable of capturing these features.
 
+\subsection{Phase transitions of La$_2$O$_3$}
 
-\subsection{Oxygen Diffusion through the Perovskites}
+Lanthanum oxide only exists as one stable form, hexagonal packed, at ambient temperatures.
+Studies at high temperature using x-ray diffraction and neutron diffraction have showed that at in the range of 2313 and 2383 K Lanthanum oxide transforms to partially ordered hexagonal and then to cubic \emph{link references}.
+The enthalpies of transition between these structures have been estimated to be in the order of 10--15 kcal/mol by applying the van't Hoff equation to the ZrO$_2$--La$_2$O$_3$ and phase diagram and by comparison to the Y$_2$O$_3$ transition from cubic to hexagonal structure. \emph{link references}
 
-To exemplify the dynamics on the bulk, diffusion of O$_2^{-2}$ is followed through the perovskite in bulk phase.
-Also, to account for the accuracy of the force field, the expansion coefficient is computed for LCFCr and this value is compared to experimental results.
-
-\subsection{CO$_2$ Interactions on the Surface}
-
-\textbf{this may be ommited for a future paper}
-
-Using a slab of a representative portion \textbf{fill in details of the real size} of the surface of the LCFCr, various mixtures of gases are fed into one of the surfaces ...
-
-Formation of intermediates is observed at 1073 K \textbf{double check temperature}
+We apply our developed ReaxFF parameters to capture the temperature at which these transitions occurs.
 
 \section{Concluding Remarks}
 \label{sec:conclusions}
@@ -224,6 +234,24 @@ Computational work has been enabled by the use of computing resources provided b
 
 \pagebreak
 
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.75]{Paper/images/La-nvt-EvsT.png}
+\caption{Equation of state of La. Three distinct changes in slope at 550 and 1134 K indicate changes into a different crystalline structure.}
+\label{fig:la-nvt-EvsT}
+\end{figure}
+
+\pagebreak
+
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.75]{Paper/images/La2O3-VvsT.png}
+\caption{Equation of state of La$_2$O$_3$. According to estimated data, changes in volume at 2313 and 2383 K correspond to the changes in the crystalline structure of Lanthanum oxide.}
+\label{fig:la2O3-npt-VvsT}
+\end{figure}
+
+\pagebreak
 \bibliography{co2perov2}
 
 \pagebreak
